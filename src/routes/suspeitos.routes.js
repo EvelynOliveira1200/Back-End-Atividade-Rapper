@@ -3,7 +3,7 @@ import { Router } from "express"
 const rapperRoutes = Router()
 
 
-let Suspeitos = [
+let suspeitos = [
     {
         id: Number(Math.floor(Math.random() * 99) + 1),
         nome: "P. Diddy",
@@ -40,7 +40,7 @@ let Suspeitos = [
 
 // Rota para buscar todos os elementos do array Suspeitos
 rapperRoutes.get("/", (req, res) => {
-    return res.status(200).send(Suspeitos)
+    return res.status(200).send(suspeitos)
 })
 
 
@@ -66,8 +66,42 @@ rapperRoutes.post("/", (req, res) => {
         atividadeSuspeita,
     }
 
-    Suspeitos.push(novoSuspeito)
+    suspeitos.push(novoSuspeito)
     return res.status(201).send({message:"Planeta cadastrado com sucesso"})
+})
+
+
+
+// Rota para editar um suspeito 
+rapperRoutes.put("/:id", (req, res) => {
+    const { id } = req.params
+
+    const suspeitos = suspeitos.find((artista) => artista.id === Number(id))
+
+    //console.log(suspeitos)
+
+    if (!suspeito) {
+        return res.status(404).send({ message: "Suspeito não encontrado!" })
+    }
+
+    const { nome, idade, paisOrigem, descricaoFisica, atividadeSuspeita } = req.body
+
+    console.log(nome)
+
+
+    suspeito.nome = nome
+    suspeito.idade = idade
+    suspeito.paisOrigem = paisOrigem
+    suspeito.descricaoFisica = descricaoFisica
+    suspeito.atividadeSuspeita = atividadeSuspeita
+
+
+
+    return res.status(200).send({
+        message: "Artista suspeito atualizado",
+        suspeito,
+    })
+
 })
 
 export default rapperRoutes
