@@ -94,7 +94,7 @@ rapperRoutes.get("/:id", (req, res) => {
 rapperRoutes.put("/:id", (req, res) => {
     const { id } = req.params
 
-    const suspeitos = suspeitos.find((artista) => artista.id === Number(id))
+    const suspeito = suspeitos.find((artista) => artista.id === Number(id))
 
     //console.log(suspeitos)
 
@@ -117,6 +117,26 @@ rapperRoutes.put("/:id", (req, res) => {
 
     return res.status(200).send({
         message: "Artista suspeito atualizado",
+        suspeito,
+    })
+
+})
+
+
+// Rota para deletar um suspeito
+rapperRoutes.delete("/:id", (req, res) => {
+    const { id } = req.params
+
+    const suspeito = suspeitos.find((movie) => movie.id === Number(id))
+
+    if (!suspeito) {
+        return res.status(404).send({ message: "Suspeito não encontrado!" })
+    }
+
+   suspeito = suspeitos.filter((movie) => movie.id !== Number(id))
+
+    return res.status(200).send({
+        message: "suspeito deletado!",
         suspeito,
     })
 
