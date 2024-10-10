@@ -70,3 +70,4 @@ rapperRoutes.post("/", (req, res) => {
     return res.status(201).send({message:"Planeta cadastrado com sucesso"})
 })
 
+export default rapperRoutes

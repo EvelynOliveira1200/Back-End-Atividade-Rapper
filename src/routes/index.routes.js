@@ -1,10 +1,11 @@
 import { Router } from "express"
 import rapperRoutes from "./suspeitos.routes.js"
 
-const rapperRoutes = Router()
+const routes = Router()
 
 routes.get("/", (req, res) => {
     return res.status(200).send({ message: "Servidor funfando" })
 })
 
-export default rapperRoutes
+routes.use("/suspeitos", rapperRoutes)
+export default routes
