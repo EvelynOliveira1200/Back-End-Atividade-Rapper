@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "Atividade Back-End Rapper (Sistema de Cadastro de Suspeitos em Investigação do FBI)",
   "main": "server.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1" ,
+    "dev": "nodemon src/server.js"
   },
+
   "keywords": [
     "Rapper",
     "SENAI",
