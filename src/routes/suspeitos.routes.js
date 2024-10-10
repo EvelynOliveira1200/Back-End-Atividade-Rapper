@@ -44,3 +44,29 @@ rapperRoutes.get("/", (req, res) => {
 })
 
 
+// Rota para cadastrar um novo Suspeito
+rapperRoutes.post("/", (req, res) => {
+    const { nome, idade, paisOrigem, descricaoFisica, atividadeSuspeita} = req.body
+
+    if(!nome || !idade || !atividadeSuspeita) {
+        return res.status(400).send({message: "Os campos nome, idade e atividades suspeitas são obrigatórios!"})
+    }
+
+    //Validação para saber se o artista participa de atividades suspeitas
+    if(atividadeSuspeita != "sim" && atividadeSuspeita != "não") {
+        return res.status(400).send({message: "Digite 'sim' ou 'não'!"})
+    }
+
+    const novoSuspeito = {
+        id: Number(Math.floor(Math.random() * 99) +1),
+        nome,
+        idade,
+        paisOrigem,
+        descricaoFisica,
+        atividadeSuspeita,
+    }
+
+    Suspeitos.push(novoSuspeito)
+    return res.status(201).send({message:"Planeta cadastrado com sucesso"})
+})
+
