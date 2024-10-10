@@ -10,7 +10,7 @@ let suspeitos = [
         idade: 54,
         paisOrigem: "EUA",
         descricaoFisica: ["Homem", "Negro", "Cabelos pretos", "Barba curta"],
-        atividadeSuspeita: true
+        atividadeSuspeita: "Sim"
     },
     {
         id: Number(Math.floor(Math.random() * 99) + 1),
@@ -18,7 +18,7 @@ let suspeitos = [
         idade: 55,
         paisOrigem: "EUA",
         descricaoFisica: ["Mulher", "Branca", "Cabelos loiros"],
-        atividadeSuspeita: false
+        atividadeSuspeita: "Não"
     },
     {
         id: Number(Math.floor(Math.random() * 99) + 1),
@@ -26,7 +26,7 @@ let suspeitos = [
         idade: 36,
         paisOrigem: "Barbados",
         descricaoFisica: ["Mulher", "Morena", "Cabelos Morenos Escuros"],
-        atividadeSuspeita: false
+        atividadeSuspeita: "Não"
     },
     {
         id: Number(Math.floor(Math.random() * 99) + 1),
@@ -34,7 +34,7 @@ let suspeitos = [
         idade: 43,
         paisOrigem: "EUA",
         descricaoFisica: ["Mulher", "Morena", "Cabelos Loiro Escuro"],
-        atividadeSuspeita: true
+        atividadeSuspeita: "Não"
     }
 ];
 
@@ -46,19 +46,23 @@ rapperRoutes.get("/", (req, res) => {
 
 // Rota para cadastrar um novo Suspeito
 rapperRoutes.post("/", (req, res) => {
-    const { nome, idade, paisOrigem, descricaoFisica, atividadeSuspeita} = req.body
+    const { nome, idade, paisOrigem, descricaoFisica, atividadeSuspeita } = req.body
 
-    if(!nome || !idade || !atividadeSuspeita) {
-        return res.status(400).send({message: "Os campos nome, idade e atividades suspeitas são obrigatórios!"})
+    if (!nome || !idade) {
+        return res.status(400).send({ message: "Os campos nome, idade e atividades suspeitas são obrigatórios!" })
     }
 
     //Validação para saber se o artista participa de atividades suspeitas
-    if(atividadeSuspeita != "sim" && atividadeSuspeita != "não") {
-        return res.status(400).send({message: "Digite 'sim' ou 'não'!"})
+    if (atividadeSuspeita != "sim" && atividadeSuspeita != "não") {
+        return res.status(400).send({ message: "Digite 'sim' ou 'não'!" })
+    }
+
+    if(!Number.isInteger(idade)){
+        return res.status(400).send({ message: "Por favor digite um número inteiro!" })
     }
 
     const novoSuspeito = {
-        id: Number(Math.floor(Math.random() * 99) +1),
+        id: Number(Math.floor(Math.random() * 99) + 1),
         nome,
         idade,
         paisOrigem,
@@ -67,7 +71,7 @@ rapperRoutes.post("/", (req, res) => {
     }
 
     suspeitos.push(novoSuspeito)
-    return res.status(201).send({message:"Suspeito cadastrado com sucesso"})
+    return res.status(201).send({ message: "Suspeito cadastrado com sucesso" })
 })
 
 
@@ -77,7 +81,7 @@ rapperRoutes.get("/:id", (req, res) => {
     console.log(id);
 
 
-    const  suspeito = suspeitos.find((movie) => movie.id === Number(id)
+    const suspeito = suspeitos.find((artista) => artista.id === Number(id)
     )
 
     //console.log(Suspeitos)
@@ -133,7 +137,7 @@ rapperRoutes.delete("/:id", (req, res) => {
         return res.status(404).send({ message: "Suspeito não encontrado!" })
     }
 
-   suspeito = suspeitos.filter((movie) => movie.id !== Number(id))
+    suspeito = suspeitos.filter((movie) => movie.id !== Number(id))
 
     return res.status(200).send({
         message: "suspeito deletado!",
