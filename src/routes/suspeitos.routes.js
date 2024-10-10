@@ -67,9 +67,27 @@ rapperRoutes.post("/", (req, res) => {
     }
 
     suspeitos.push(novoSuspeito)
-    return res.status(201).send({message:"Planeta cadastrado com sucesso"})
+    return res.status(201).send({message:"Suspeito cadastrado com sucesso"})
 })
 
+
+rapperRoutes.get("/:id", (req, res) => {
+    const { id } = req.params
+
+    console.log(id);
+
+
+    const  suspeito = suspeitos.find((movie) => movie.id === Number(id)
+    )
+
+    //console.log(Suspeitos)
+
+    if (!suspeito) {
+        return res.status(404).send({ message: "Suspeito não encontrado!" })
+    }
+
+    return res.status(200).send(suspeitos)
+})
 
 
 // Rota para editar um suspeito 
