@@ -96,9 +96,24 @@ rapperRoutes.get("/:id", (req, res) => {
 
 // Rota para editar um suspeito 
 rapperRoutes.put("/:id", (req, res) => {
+
     const { id } = req.params
 
-    const suspeito = suspeitos.find((artista) => artista.id === Number(id))
+    const suspeito = suspeitos.find((artist) => artist.id === Number(id))
+    const { nome, idade, paisOrigem, descricaoFisica, atividadeSuspeita } = req.body
+    
+    if (!nome || !idade) {
+        return res.status(400).send({ message: "Os campos nome, idade e atividades suspeitas são obrigatórios!" })
+    }
+
+    //Validação para saber se o artista participa de atividades suspeitas
+    if (atividadeSuspeita != "sim" && atividadeSuspeita != "não") {
+        return res.status(400).send({ message: "Digite 'sim' ou 'não'!" })
+    }
+
+    if(!Number.isInteger(idade)){
+        return res.status(400).send({ message: "Por favor digite um número inteiro!" })
+    }
 
     //console.log(suspeitos)
 
@@ -106,7 +121,8 @@ rapperRoutes.put("/:id", (req, res) => {
         return res.status(404).send({ message: "Suspeito não encontrado!" })
     }
 
-    const { nome, idade, paisOrigem, descricaoFisica, atividadeSuspeita } = req.body
+
+   
 
     console.log(nome)
 
